@@ -8,10 +8,8 @@ public class main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int n = in.nextInt();
-
         HashMap<String, Node> boysMap = new HashMap<>();
         HashMap<String, Node> girlsMap = new HashMap<>();
-
         Node[] boys = new Node[n];
         for (int i = 0; i < n; i++) {
             String name = in.next();
@@ -124,6 +122,5 @@ class Node {
         this.ifFree = false;
         lover.date = this;
         lover.ifFree = false;
-
     }
 }
