@@ -1,0 +1,4 @@
+N=1000 Time taken: 20 milliseconds
+N=2000 Time taken: 39 milliseconds
+N=500  Time taken: 11 milliseconds
+N=100  Time taken: 5  milliseconds

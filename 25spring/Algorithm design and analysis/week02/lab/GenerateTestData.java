@@ -1,25 +1,49 @@
-package week02.lab;
+//package week02.lab;
 
-import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Random;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class GenerateTestData {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(args[0]))) {
-            Random random = new Random();
-            // Generate random array size between 10 and 10000
-            int n = random.nextInt(9991) + 10; // 10 ~ 10,000
-            writer.write(n + "\n");
-            // Generate random array elements
-            for (int i = 0; i < n; i++) {
-                writer.write(random.nextInt(10000) + " ");
+        System.out.println("Enter n: ");
+        int n = in.nextInt();
+        in.close();
+
+        String fileName = args[0]; // 直接赋值
+        String[] boys = new String[n];
+        String[] girls = new String[n];
+        for (int i = 0; i < n; i++) {
+            boys[i] = "m" + (i + 1);
+            girls[i] = "w" + (i + 1);
+        }
+
+        // 打乱顺序
+        List<String> shuffledBoys = Arrays.asList(boys.clone());
+        List<String> shuffledGirls = Arrays.asList(girls.clone());
+        Collections.shuffle(shuffledBoys);
+        Collections.shuffle(shuffledGirls);
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
+            writer.println(n);
+            writer.println(String.join(" ", boys));
+            writer.println(String.join(" ", girls));
+            for (String boy : boys) {
+                Collections.shuffle(shuffledGirls);
+                writer.println(String.join(" ", shuffledGirls));
             }
+            for (String girl : girls) {
+                Collections.shuffle(shuffledBoys);
+                writer.println(String.join(" ", shuffledBoys));
+            }
+            System.out.println("Test data generated in data.in");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error writing to file: " + e.getMessage());
         }
     }
 }

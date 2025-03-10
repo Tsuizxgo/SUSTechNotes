@@ -1,4 +1,4 @@
-package week02.lab;
+//package week02.lab;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class main {
     public static void main(String[] args) {
+        long startTime = System.currentTimeMillis(); // Record start time
         Scanner in = new Scanner(System.in);
         int n = in.nextInt();
         HashMap<String, Node> boysMap = new HashMap<>();
@@ -65,9 +66,16 @@ public class main {
                 }
             }
         }
-        for (Map.Entry<String, String> entry : ans.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
+        for (Node boy : boys) {
+            if (ans.containsKey(boy.name)) { // 确保 boy 在 ans 中有匹配项 (虽然在这个稳定匹配算法中，应该都有)
+                System.out.print(boy.name + " " + ans.get(boy.name) + " ");
+            }
         }
+        long endTime = System.currentTimeMillis(); // Record end time
+        long elapsedTime = endTime - startTime;
+        System.out.println(); // Add a newline for better formatting
+        System.out.println("Time taken: " + elapsedTime + " milliseconds");
+        in.close();
     }
 
     static boolean prefer(Node girl, Node comBoy) {
