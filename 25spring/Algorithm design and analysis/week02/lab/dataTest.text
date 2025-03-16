@@ -1,0 +1,163 @@
+Basic Functionality 直接用pdf给的
+Edge Cases 
+1.n=1
+    输入：1
+    m1
+    w1
+    w1
+    m1
+    输出：
+    m1 w1
+2.极端偏好 (Extreme Preference)
+    输入：
+    3
+    m1 m2 m3
+    w1 w2 w3
+    w1 w2 w3
+    w1 w2 w3
+    w1 w2 w3
+    m1 m2 m3
+    m1 m2 m3
+    m1 m2 m3
+    输出：
+    m1 w1 m2 w2 m3 w3 
+3.输入：
+    4
+    m1 m2 m3 m4
+    w1 w2 w3 w4
+    w1 w2 w3 w4
+    w1 w2 w3 w4
+    w1 w2 w3 w4
+    w1 w2 w3 w4
+    m1 m2 m3 m4
+    m1 m2 m3 m4
+    m1 m2 m3 m4
+    m1 m2 m3 m4
+    输出：
+    m1 w1 m2 w2 m3 w3 m4 w4 
+4.输入：
+    3
+    m1 m2 m3
+    w1 w2 w3
+    w3 w2 w1
+    w3 w2 w1
+    w3 w2 w1
+    m3 m2 m1
+    m3 m2 m1
+    m3 m2 m1
+    输出：
+    m1 w1 m2 w2 m3 w3 
+5.输入：所有人偏好倒置
+    4
+    m1 m2 m3 m4
+    w1 w2 w3 w4
+    w4 w3 w2 w1
+    w4 w3 w2 w1
+    w4 w3 w2 w1
+    w4 w3 w2 w1
+    m4 m3 m2 m1
+    m4 m3 m2 m1
+    m4 m3 m2 m1
+    m4 m3 m2 m1
+    输出：
+    m1 w1 m2 w2 m3 w3 m4 w4
+6.环形偏好
+    输入：
+    4
+    m1 m2 m3 m4
+    w1 w2 w3 w4
+    w2 w3 w4 w1
+    w3 w4 w1 w2
+    w4 w1 w2 w3
+    w1 w2 w3 w4
+    m2 m3 m4 m1
+    m3 m4 m1 m2
+    m4 m1 m2 m3
+    m1 m2 m3 m4
+    输出：
+    m1 w2 m2 w3 m3 w4 m4 w1
+7.
+    输入：
+    6
+    m1 m2 m3 m4 m5 m6
+    w1 w2 w3 w4 w5 w6
+    w2 w3 w4 w5 w6 w1
+    w3 w4 w5 w6 w1 w2
+    w4 w5 w6 w1 w2 w3
+    w5 w6 w1 w2 w3 w4
+    w6 w1 w2 w3 w4 w5
+    w1 w2 w3 w4 w5 w6
+    m2 m3 m4 m5 m6 m1
+    m3 m4 m5 m6 m1 m2
+    m4 m5 m6 m1 m2 m3
+    m5 m6 m1 m2 m3 m4
+    m6 m1 m2 m3 m4 m5
+    m1 m2 m3 m4 m5 m6
+    输出：
+    m1 w2 m2 w3 m3 w4 m4 w5 m5 w6 m6 w1
+8. 部分循环 4 5为一对，另外三个循环
+    输入：
+    5
+    m1 m2 m3 m4 m5
+    w1 w2 w3 w4 w5
+    w2 w3 w1 w5 w4
+    w3 w1 w2 w4 w5
+    w1 w2 w3 w5 w4
+    w5 w4 w2 w3 w1
+    w4 w5 w1 w3 w2
+    m2 m3 m1 m5 m4
+    m3 m1 m2 m4 m5
+    m1 m2 m3 m5 m4
+    m5 m4 m2 m3 m1
+    m4 m5 m1 m3 m2
+    输出：
+    m1 w2 m2 w3 m3 w1 m4 w5 m5 w4
+9.交错循环：两个循环
+    输入：
+    6
+    m1 m2 m3 m4 m5 m6
+    w1 w2 w3 w4 w5 w6
+    w3 w2 w1 w6 w5 w4
+    w1 w3 w2 w5 w4 w6
+    w2 w1 w3 w4 w6 w5
+    w6 w5 w4 w3 w2 w1
+    w5 w4 w6 w1 w3 w2
+    w4 w6 w5 w2 w1 m3
+    m3 m2 m1 m6 m5 m4
+    m1 m3 m2 m5 m4 m6
+    m2 m1 m3 m4 m6 m5
+    m6 m5 m4 m3 m2 m1
+    m5 m4 m6 m1 m3 m2
+    m4 m6 m5 m2 m1 m3
+    输出：
+    m1 w3 m2 w1 m3 w2 m4 w6 m5 w5 m6 w4
+10.
+    输入：
+    7
+    m1 m2 m3 m4 m5 m6 m7
+    w1 w2 w3 w4 w5 w6 w7
+    w3 w2 w1 w7 w6 w5 w4
+    w1 w3 w2 w6 w5 w4 w7
+    w2 w1 w3 w5 w4 w7 w6
+    w7 w6 w5 w4 w3 w2 w1
+    w5 w4 w7 w1 w3 w2 w6
+    w4 w7 w6 w2 w1 w3 w5
+    w6 w5 w4 w3 w2 w1 w7
+    m3 m2 m1 m7 m6 m5 m4
+    m1 m3 m2 m6 m5 m4 m7
+    m2 m1 m3 m5 m4 m7 m6
+    m7 m6 m5 m4 m3 m2 m1
+    m5 m4 m7 m1 m3 m2 m6
+    m4 m7 m6 m2 m1 m3 m5
+    m6 m5 m4 m3 m2 m1 m7
+    输出：
+    m1 w3 m2 w1 m3 w2 m4 w7 m5 w5 m6 w4 m7 w6
+    
+
+
+
+
+
+
+
+

@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/tsui/Documents/LearingInSUSTech/25spring/Algorithm design and analysis/week04/test/main'
+relocations:     []
+...

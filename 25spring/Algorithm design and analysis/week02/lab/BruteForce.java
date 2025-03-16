@@ -29,9 +29,14 @@ public class BruteForce {
             }
         }
         int[][] girlPre = new int[n][n];
+        HashMap<Integer, HashMap<Integer, Integer>> girlRankMap = new HashMap<>(); // 用于存储女生的偏好排名
         for (int i = 0; i < girlPre.length; i++) {
+            girlRankMap.put(i, new HashMap<>());
             for (int j = 0; j < girlPre[0].length; j++) {
                 girlPre[i][j] = boyIndex.get(in.next());
+
+                int boyIndexInPreference = girlPre[i][j];
+                girlRankMap.get(i).put(boyIndexInPreference, j); // 存偏好
             }
         }
         // System.out.println(Arrays.toString(boys));
@@ -41,20 +46,20 @@ public class BruteForce {
         int[] match = new int[n];
         for (int i = 0; i < n; i++)
             match[i] = i;
-        genPermutations(match, 0, n, boyPre, girlPre, boys, girls);
+        genPermutations(match, 0, n, boyPre, girlPre, boys, girls, girlRankMap);
         in.close();
     }
 
     static void genPermutations(int[] match, int start, int n, int[][] boyPre, int[][] girlPre, String[] boys,
-            String[] girls) {
+            String[] girls, HashMap<Integer, HashMap<Integer, Integer>> girlRankMap) {
         if (start == n) {
-            if (checkStability(n, match, boyPre, girlPre))
+            if (checkStability(n, match, boyPre, girlPre, girlRankMap))
                 printMatching(match, boys, girls);
             return;
         }
         for (int i = start; i < n; i++) {
             swap(match, start, i);
-            genPermutations(match, start + 1, n, boyPre, girlPre, boys, girls);
+            genPermutations(match, start + 1, n, boyPre, girlPre, boys, girls, girlRankMap);
             swap(match, start, i);
         }
     }
@@ -65,12 +70,12 @@ public class BruteForce {
         arr[j] = temp;
     }
 
-    static boolean checkStability(int n, int[] match, int[][] boyPre, int[][] girlPre) {
+    static boolean checkStability(int n, int[] match, int[][] boyPre, int[][] girlPre,
+            HashMap<Integer, HashMap<Integer, Integer>> girlRankMap) {
         int[] girlToBoy = new int[n]; // girlToBoy[i] 表示女生 i 当前的匹配对象
         for (int i = 0; i < n; i++) {
             girlToBoy[match[i]] = i; // match[b] 表示男生 b 配对的女生
         }
-
         for (int b = 0; b < n; b++) { // 遍历所有男生
             int currentGirl = match[b]; // 男生 b 当前的匹配对象
             for (int j = 0; j < n; j++) { // 遍历男生 b 的偏好列表
@@ -79,11 +84,17 @@ public class BruteForce {
                     break; // 遇到了当前匹配者，停止检查
                 int preferredGirlMatch = girlToBoy[preferredGirl]; // 该女生目前的匹配对象
                 // 检查女生是否更喜欢 b 而不是她的当前匹配者
-                for (int k = 0; k < n; k++) {
-                    if (girlPre[preferredGirl][k] == b)
-                        return false; // 女生也更喜欢这个男生，匹配不稳定
-                    if (girlPre[preferredGirl][k] == preferredGirlMatch)
-                        break; // 女生更喜欢当前配对，继续
+
+                // for (int k = 0; k < n; k++) {
+                // if (girlPre[preferredGirl][k] == b)
+                // return false; // 女生也更喜欢这个男生，匹配不稳定
+                // if (girlPre[preferredGirl][k] == preferredGirlMatch)
+                // break; // 女生更喜欢当前配对，继续
+                // }
+                int exRank = girlRankMap.get(preferredGirl).get(b);
+                int currentRank = girlRankMap.get(preferredGirl).get(preferredGirlMatch);
+                if (exRank < currentRank) {
+                    return false; // 女生也更喜欢新来的而不是现在的
                 }
             }
         }

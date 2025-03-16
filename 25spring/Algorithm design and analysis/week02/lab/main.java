@@ -1,7 +1,9 @@
 //package week02.lab;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class main {
@@ -11,11 +13,13 @@ public class main {
         int n = in.nextInt();
         HashMap<String, Node> boysMap = new HashMap<>();
         HashMap<String, Node> girlsMap = new HashMap<>();
+        Queue<Node> freeBoys = new LinkedList<>();
         Node[] boys = new Node[n];
         for (int i = 0; i < n; i++) {
             String name = in.next();
             boys[i] = new Node(name, n);
             boysMap.put(name, boys[i]);
+            freeBoys.add(boys[i]);
         }
         Node[] girls = new Node[n];
         for (int i = 0; i < n; i++) {
@@ -33,66 +37,37 @@ public class main {
             for (int j = 0; j < n; j++) {
                 String name = in.next();
                 girls[i].likes[j] = boysMap.get(name);
+                girls[i].rankMap.put(name, j);
             }
         }
-        HashMap<String, String> ans = new HashMap<>();
-        // for (Node node : boys) {
-        // System.out.print(node.name + " " + Arrays.toString(node.likes));
-        // }
-        // System.out.println();
-        // for (Node node : girls) {
-        // System.out.print(node.name + " " + Arrays.toString(node.likes));
-        // }
-        while (!allDated(boys)) {
-            for (Node boy : boys) {
-                if (boy.ifFree) {
-                    for (Node girl : boy.likes) {
-                        if (girl.ifFree) {
-                            ans.remove(boy.name);
-                            boy.date(girl);
-                            ans.put(boy.name, girl.name);
-                            break;
-                        } else {
-                            if (prefer(girl, boy)) {
-                                continue;
-                            } else {
-                                ans.remove(girl.date.name);
-                                girl.date(boy);
-                                ans.put(boy.name, girl.name);
-                                break;
-                            }
-                        }
+        while (!freeBoys.isEmpty()) {
+            Node boy = freeBoys.poll();
+            for (Node girl : boy.likes) {
+                if (girl.ifFree) {
+                    boy.date(girl);
+                    break;
+                } else {
+                    if (!prefer(girl, boy)) {
+                        freeBoys.add(girl.date);
+                        boy.date(girl);
+                        break;
                     }
                 }
             }
         }
         for (Node boy : boys) {
-            if (ans.containsKey(boy.name)) { // 确保 boy 在 ans 中有匹配项 (虽然在这个稳定匹配算法中，应该都有)
-                System.out.print(boy.name + " " + ans.get(boy.name) + " ");
-            }
+            System.out.print(boy.name + " " + boy.date.name + " ");
         }
-        long endTime = System.currentTimeMillis(); // Record end time
+
+        long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
-        System.out.println(); // Add a newline for better formatting
+        System.out.println();
         System.out.println("Time taken: " + elapsedTime + " milliseconds");
         in.close();
     }
 
     static boolean prefer(Node girl, Node comBoy) {
-        Node now = girl.date;
-        int nowIndex = 0;
-        int comIndex = 0;
-        for (int i = 0; i < girl.likes.length; i++) {
-            if (now.name == girl.likes[i].name)
-                nowIndex = i;
-            if (comBoy.name == girl.likes[i].name)
-                comIndex = i;
-        }
-        if (nowIndex < comIndex) {
-            // 原配赢
-            return true;
-        } else
-            return false; // 新来的boy赢
+        return girl.rankMap.get(girl.date.name) < girl.rankMap.get(comBoy.name);
     }
 
     static boolean allDated(Node[] nodes) {
@@ -110,15 +85,22 @@ class Node {
     boolean ifFree;
     Node date;
     Node[] likes;
+    Map<String, Integer> rankMap;
 
     public Node(String name, int n) {
         this.name = name;
         this.ifFree = true;
         this.likes = new Node[n];
         this.date = null;
+        this.rankMap = new HashMap<>();
     }
 
     public void date(Node lover) {
+        // 双方都清空
+        if (lover.date != null) {
+            lover.date.ifFree = true;
+            lover.date.date = null;
+        }
         // 前任被删
         if (this.date != null) {
             Node ex = this.date;
