@@ -6,3 +6,8 @@
 .out
 **/.in
 **/.out
+.dYSM
+**/.dSYM
+.vscode
+**/.vscode
+
