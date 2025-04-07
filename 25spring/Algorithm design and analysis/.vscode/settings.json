@@ -3,6 +3,12 @@
         "vector": "cpp",
         "string": "cpp",
         "new": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "ostream": "cpp",
+        "__split_buffer": "cpp",
+        "deque": "cpp",
+        "queue": "cpp",
+        "ios": "cpp",
+        "tuple": "cpp"
     }
 }

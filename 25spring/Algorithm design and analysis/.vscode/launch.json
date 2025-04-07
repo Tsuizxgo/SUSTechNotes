@@ -1,17 +1,35 @@
 {
     "configurations": [
         {
-            "name": "C/C++: clang++ build and debug active file",
+            "type": "java",
+            "name": "main",
+            "request": "launch",
+            "mainClass": "Assignments.Lab2.main",
+            "projectName": "Algorithm design and analysis_bb9367df"
+        },
+        // {
+        //     "name": "C/C++: clang++ build and debug active file",
+        //     "type": "cppdbg",
+        //     "request": "launch",
+        //     "program": "${fileDirname}/${fileBasenameNoExtension}",
+        //     "args": [],
+        //     "stopAtEntry": false,
+        //     "cwd": "${fileDirname}",
+        //     "environment": [],
+        //     "externalConsole": true,
+        //     "MIMode": "lldb",
+        //     "preLaunchTask": "C/C++: clang++ build active file"
+        // },
+        {
+            "name": "Launch (lldb)",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "program": "${workspaceFolder}/a.out",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${fileDirname}",
+            "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": true,
-            "MIMode": "lldb",
-            "preLaunchTask": "C/C++: clang++ build active file"
+            "externalConsole": false
         }
     ],
     "version": "2.0.0"

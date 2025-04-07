@@ -7,9 +7,10 @@ lw t1, dvalue1
 lw t2, dvalue2
 
 #add t0, t1, t2
-j a
+sub t0,t1,t2
+
 slti t3, t2, 0
-slt t4, t0, t1 # add two values
+slt t4, t1, t0 # add two values
 # t3 = (t2 < 0)
 # t4 = (t0 < t1), thst is, (t1 + t2 < t1)
 mv a0, t0
@@ -20,8 +21,6 @@ bne t3, t4, overflow # print the sum
 # or if (t2 >= 0) && (t1 + t2 < t1)
 print_string("\nNo overflow occured.")
 jal exit
-
-a:add t0, t1,t2
 
 overflow:  print_string("\nOne overflow occured.")
 exit: end
